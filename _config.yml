@@ -3,6 +3,7 @@ title: Pete Cruz
 description: 'Software Engineer ranting about programming languages, concurrent, and distributed systems'
 url: 'https://petesta.github.io'
 baseurl: '/'
+timezone: America/Los_Angeles
 # disqus_shortname: 'your-disqus-name'
 
 # Author Settings
@@ -23,7 +24,7 @@ defaults:
 
 # Build Settings
 destination: _site
-paginate: 10
+paginate: 5
 permalink: /:year/:title/
 markdown: kramdown
 highlighter: rouge
@@ -36,4 +37,3 @@ kramdown:
 
 gems: ['jekyll-paginate']
 exclude: ['Gemfile', 'Gemfile.lock', 'README.md']
-timezone: America/Los_Angeles
