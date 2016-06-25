@@ -1,6 +1,6 @@
 # Site Settings
 title: Pete Cruz
-description: 'Software Engineer ranting about programming languages, concurrent, and distributed systems'
+description: 'Software Engineer ranting about Vim, concurrency, systems, and programming languages'
 url: 'https://petesta.github.io'
 baseurl: '/'
 timezone: America/Los_Angeles
