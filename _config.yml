@@ -4,7 +4,7 @@ description: 'Software Engineer ranting about Vim, concurrency, systems, and pro
 url: 'https://petesta.github.io'
 baseurl: '/'
 timezone: America/Los_Angeles
-# disqus_shortname: 'your-disqus-name'
+disqus_shortname: 'petesta'
 
 # Author Settings
 author:
