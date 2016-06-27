@@ -1,16 +1,19 @@
-# Site settings
+# Site Settings
 title: Pete Cruz
-description: 'Software Engineer ranting about programming languages, concurrent, and distributed systems'
+description: 'Software Engineer ranting about Vim, concurrency, systems, and programming languages'
 url: 'https://petesta.github.io'
 baseurl: '/'
 google_analytics: 'UA-79714344-1'
-# disqus_shortname: 'your-disqus-name'
+disqus_shortname: 'petesta'
+timezone: America/Los_Angeles
 
+# Author Settings
 author:
   name: 'Pete Cruz'
   email: iPetesta@gmail.com
-  twitter_username: iPetesta
   github_username:  Petesta
+  linkedin_username: petecruz
+  twitter_username: iPetesta
 
 defaults:
   -
@@ -18,11 +21,11 @@ defaults:
       path: ''
       type: 'posts'
     values:
-        layout: 'post'
+      layout: 'post'
 
-# Build settings
+# Build Settings
 destination: _site
-paginate: 10
+paginate: 5
 permalink: /:year/:title/
 markdown: kramdown
 highlighter: rouge
@@ -34,4 +37,4 @@ kramdown:
   hard_wrap: false
 
 gems: ['jekyll-paginate']
-exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']
+exclude: ['Gemfile', 'Gemfile.lock', 'README.md']
