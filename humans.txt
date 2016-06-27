@@ -1,14 +1,12 @@
 /* TEAM */
-Developer & Designer: Pete Cruz
+Lead: Pete Cruz
 Twitter: @iPetesta
-Site: https://petesta.github.io
 Location: San Francisco, CA, USA
 
 /* THANKS */
 Name: Dale Anthony
 
+Name: Josh Gerdes
+
 /* SITE */
 Last update: 2016/06/19
-Standards: HTML5, CSS3
-Components: Jekyll
-Software: Sublime Text, Photoshop
