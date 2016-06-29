@@ -3,8 +3,9 @@ title: Pete Cruz
 description: 'Software Engineer ranting about Vim, concurrency, systems, and programming languages'
 url: 'https://petesta.github.io'
 baseurl: '/'
-timezone: America/Los_Angeles
+google_analytics: 'UA-79714344-1'
 disqus_shortname: 'petesta'
+timezone: America/Los_Angeles
 
 # Author Settings
 author:
