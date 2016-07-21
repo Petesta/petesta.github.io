@@ -7,6 +7,16 @@ layout: default
       <time datetime="{{ page.date | date: "%-d %b %Y" }}" class="post-meta__date date">
         {{ page.date | date: "%-d %b %Y" }}
       </time>
+
+      <span class="reading-time">
+        {% assign words = content | number_of_words %}
+        {% if words < 360 %}
+           1
+        {% else %}
+          {{ words | divided_by: 180 }}
+        {% endif %} min read
+      </span>
+
       &#8226;
       <span class="post-meta__tags">
         on
