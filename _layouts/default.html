@@ -3,7 +3,9 @@
   {% include head.html %}
 
   <body>
-    {% include facebook.html %}
+    {% if jekyll.environment == "production" %}
+      {% include facebook.html %}
+    {% endif %}
     {% include header.html %}
 
     <div class="content-wrapper">
