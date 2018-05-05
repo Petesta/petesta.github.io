@@ -2,10 +2,12 @@
 layout: null
 ---
 $(document).ready(function() {
+  console.log('loaded');
   $('a.blog-button').click(function(e) {
     if ($('.panel-cover').hasClass('panel-cover--collapsed')) return;
     currentWidth = $('.panel-cover').width();
     if (currentWidth < 960) {
+      console.log('this');
       $('.panel-cover').addClass('panel-cover--collapsed');
       $('.content-wrapper').addClass('animated slideInRight');
     } else {
@@ -15,6 +17,7 @@ $(document).ready(function() {
   });
 
   if (window.location.hash && window.location.hash === '#blog') {
+    console.log('here');
     $('.panel-cover').addClass('panel-cover--collapsed');
   }
 
