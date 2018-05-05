@@ -1,7 +1,7 @@
 # Site Settings
 title: Pete Cruz
 description: 'Software Engineer ranting about Vim, concurrency, systems, and programming languages'
-url: 'https://blog.petesta.com/'
+url: 'https://blog.petesta.com'
 baseurl: '/'
 google_analytics: 'UA-79714344-1'
 disqus_shortname: 'petesta'
