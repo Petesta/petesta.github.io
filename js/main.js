@@ -3,6 +3,8 @@ layout: null
 ---
 $(document).ready(function() {
   console.log('loaded');
+  console.log($('.panel-cover').hasClass('panel-cover--collapsed'));
+  console.log('loaded2');
   $('a.blog-button').click(function(e) {
     if ($('.panel-cover').hasClass('panel-cover--collapsed')) return;
     currentWidth = $('.panel-cover').width();
