@@ -19,6 +19,12 @@ $(document).ready(function() {
   }
 
   if (window.location.pathname !== '{{ site.baseurl }}' && window.location.pathname !== '{{ site.baseurl }}index.html') {
+    console.log('first baseurl');
+    console.log('{{ site.baseurl }}');
+    console.log('second baseurl');
+    console.log('{{ site.baseurl }}.index.html');
+    console.log('third baseurl');
+    console.log('{{ site.baseurl }}' + '.index.html');
     $('.panel-cover').addClass('panel-cover--collapsed');
   }
 
