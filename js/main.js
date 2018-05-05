@@ -5,6 +5,8 @@ $(document).ready(function() {
   console.log('loaded');
   console.log($('.panel-cover').hasClass('panel-cover--collapsed'));
   console.log('loaded2');
+  console.log('{{ site.baseurl }}');
+  console.log('loaded3');
   $('a.blog-button').click(function(e) {
     if ($('.panel-cover').hasClass('panel-cover--collapsed')) return;
     currentWidth = $('.panel-cover').width();
@@ -35,7 +37,7 @@ $(document).ready(function() {
     console.log('{{ site.baseurl }}.index.html');
     console.log('third baseurl');
     console.log('{{ site.baseurl }}' + '.index.html');
-    $('.panel-cover').addClass('panel-cover--collapsed');
+    // $('.panel-cover').addClass('panel-cover--collapsed');
   }
 
   $('.btn-mobile-menu').click(function() {
