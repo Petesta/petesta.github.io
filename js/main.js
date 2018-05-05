@@ -18,8 +18,12 @@ $(document).ready(function() {
     $('.panel-cover').addClass('panel-cover--collapsed');
   }
 
-  if (window.location.pathname !== {{ site.url }}) {
-    console.log('asdfasdfasdfasd');
+  if (window.location.pathname !== '{{ site.url }}') {
+    console.log('1asdfasdfasdfasd');
+    console.log('{{ site.url }}');
+    console.log('2asdfasdfasdfasd');
+    console.log({{ site.url }});
+    console.log('3asdfasdfasdfasd');
     $('.panel-cover').addClass('panel-cover--collapsed');
   }
 
