@@ -18,11 +18,11 @@ $(document).ready(function() {
     $('.panel-cover').addClass('panel-cover--collapsed');
   }
 
-  if (window.location.pathname !== '{{ site.pathcheck }}') {
+  if (window.location.pathname !== '{{ site.path_check }}') {
     console.log('1asdfasdfasdfasd');
     console.log('{{ site.baseurl }}');
     console.log('{{ site.baseurl }}' === '/');
-    console.log('pathcheck here ' + '{{ site.path_check }}');
+    console.log('path_check here ' + '{{ site.path_check }}');
     console.log(window.location.pathname);
     console.log('3asdfasdfasdfasd');
     $('.panel-cover').addClass('panel-cover--collapsed');
