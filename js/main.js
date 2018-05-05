@@ -22,6 +22,10 @@ $(document).ready(function() {
   }
 
   if (window.location.pathname !== '{{ site.baseurl }}' && window.location.pathname !== '{{ site.baseurl }}index.html') {
+  // if (window.location.pathname !== '') {
+    if ('{{ site.baseurl }}' === '') {
+      console.log('it is empty');
+    }
     console.log('first baseurl');
     console.log('{{ site.baseurl }}');
     console.log('second baseurl');
