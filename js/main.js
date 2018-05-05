@@ -22,7 +22,7 @@ $(document).ready(function() {
     console.log('1asdfasdfasdfasd');
     console.log('{{ site.baseurl }}');
     console.log('{{ site.baseurl }}' === '/');
-    console.log('pathcheck here ' + '{{ site.pathcheck }}');
+    console.log('pathcheck here ' + '{{ site.path_check }}');
     console.log(window.location.pathname);
     console.log('3asdfasdfasdfasd');
     $('.panel-cover').addClass('panel-cover--collapsed');
