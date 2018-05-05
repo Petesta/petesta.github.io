@@ -19,6 +19,7 @@ $(document).ready(function() {
   }
 
   if (window.location.pathname !== '{{ site.baseurl }}') {
+    console.log('asdfasdfasdfasd');
     $('.panel-cover').addClass('panel-cover--collapsed');
   }
 
