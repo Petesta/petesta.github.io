@@ -26,6 +26,7 @@ $(document).ready(function() {
     if ('{{ site.baseurl }}' === '') {
       console.log('it is empty');
     }
+    console.log($('.panel-cover').hasClass('panel-cover--collapsed'));
     console.log('first baseurl');
     console.log('{{ site.baseurl }}');
     console.log('second baseurl');
