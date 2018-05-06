@@ -18,6 +18,10 @@ $(document).ready(function() {
     $('.panel-cover').addClass('panel-cover--collapsed');
   }
 
+  if (window.location.pathname && window.location.pathname === '/resume/') {
+    $('.panel-cover').addClass('panel-cover--collapsed');
+  }
+
   if (window.location.pathname !== '{{ site.path_check }}') {
     $('.panel-cover').addClass('panel-cover--collapsed');
   }
