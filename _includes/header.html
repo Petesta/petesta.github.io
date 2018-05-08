@@ -76,6 +76,16 @@
                 </li>
               {% endif %}
 
+              {% if site.author.instagram_username %}
+                <!-- Instagram -->
+                <li class="navigation__item">
+                  <a href="https://www.instagram.com/{{ site.author.instagram_username }}" title="{{ site.author.instagram_username }} on Instagram" target="_blank">
+                    <i class="icon icon-social-instagram"></i>
+                    <span class="label">Instagram</span>
+                  </a>
+                </li>
+              {% endif %}
+
               {% if site.author.email %}
                 <!-- Email -->
                 <li class="navigation__item">
@@ -88,7 +98,7 @@
 
               <!-- RSS -->
               <li class="navigation__item">
-                <a href="{{ "/feed.xml" | prepend: site.baseurl }}" title="Subscribe" target="_blank">
+                <a href="{{ "feed.xml" | prepend: site.baseurl }}" title="Subscribe" target="_blank">
                   <i class="icon icon-rss"></i>
                   <span class="label">RSS</span>
                 </a>
