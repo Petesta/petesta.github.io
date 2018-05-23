@@ -20,4 +20,18 @@
       {% include google_analytics.html %}
     {% endif %}
   </body>
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        var t = window.performance && performance.timing;
+        function round(num) { return Math.round(num * 100) / 100; }
+        if (t) {
+          var loadTime = (t.loadEventEnd - t.navigationStart) / 1000;
+          var timingStatsHTML = ' This page loaded in ' + round(loadTime) + ' seconds. ';
+          var footerCopyright = document.querySelector('.footer__copyright');
+          footerCopyright.innerHTML += timingStatsHTML;
+        }
+      }, 0);
+    });
+  </script>
 </html>
