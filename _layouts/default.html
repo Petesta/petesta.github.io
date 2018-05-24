@@ -24,14 +24,11 @@
     window.addEventListener('load', function() {
       setTimeout(function() {
         var t = window.performance && performance.timing;
+        var footerCopyright = document.querySelector('.footer__copyright');
         function round(num) { return Math.round(num * 100) / 100; }
-        if (t) {
+        if (t && footerCopyright !== null) {
           var loadTime = (t.loadEventEnd - t.navigationStart) / 1000;
-          var timingStatsHTML = ' This page loaded in ' + round(loadTime) + ' seconds. ';
-          var footerCopyright = document.querySelector('.footer__copyright');
-          if (footerCopyright !== null) {
-            footerCopyright.innerHTML += timingStatsHTML;
-          }
+          footerCopyright.innerHTML += ' This page loaded in ' + round(loadTime) + ' seconds. ';
         }
       }, 0);
     });
