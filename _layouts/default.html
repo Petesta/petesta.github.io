@@ -29,7 +29,9 @@
           var loadTime = (t.loadEventEnd - t.navigationStart) / 1000;
           var timingStatsHTML = ' This page loaded in ' + round(loadTime) + ' seconds. ';
           var footerCopyright = document.querySelector('.footer__copyright');
-          footerCopyright.innerHTML += timingStatsHTML;
+          if (footerCopyright !== null) {
+            footerCopyright.innerHTML += timingStatsHTML;
+          }
         }
       }, 0);
     });
