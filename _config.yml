@@ -1,6 +1,6 @@
 # Site Settings
 title: Pete Cruz
-description: 'Software Engineer ranting about Vim, concurrency, systems, and programming languages'
+description: 'Tales of a Software Engineer'
 url: 'https://blog.petesta.com'
 baseurl: '/'
 path_check: '/'
