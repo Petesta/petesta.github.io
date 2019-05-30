@@ -1,7 +1,8 @@
 # Site Settings
 title: Pete Cruz
 description: 'Tales of a Software Engineer'
-url: 'https://blog.petesta.com'
+# url: 'https://blog.petesta.com'
+url: ''
 baseurl: '/'
 path_check: '/'
 google_analytics: 'UA-79714344-1'
