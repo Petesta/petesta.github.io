@@ -1,0 +1,50 @@
+# Builds the site with npm run build and publishes dist/ to GitHub Pages on
+# every push to master. The same build runs locally with: npm run build
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer push doesn't cancel one already publishing
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The Node version the site is developed with
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 23.7.0
+          cache: npm
+
+      # --ignore-scripts skips postinstall, which downloads Playwright's browsers;
+      # the build doesn't need them
+      - run: npm ci --ignore-scripts
+
+      - run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

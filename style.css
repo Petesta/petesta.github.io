@@ -1,0 +1,1201 @@
+/* ── Colors (design colorscheme-variants.html: B adjusted) ─────────────────── */
+/* Two schemes on the brand navy (#003660) and gold (#FEBC11), following the visitor's
+   system setting: dark by default ("Gold on Navy, adjusted") and light when the system
+   asks for light ("Navy on Gold, adjusted"). The palette comes first; the roles under it
+   are what the parts of the page use, so a scheme only has to say where it differs.
+   Code blocks keep their Nord syntax colors, which the build sets for a dark background. */
+:root {
+  color-scheme: dark;
+  --bg: #001a30;
+  --bg0-h: #001527;
+  --bg1: #003660;
+  --bg2: #0a3f6c;
+  --bg3: #0f4c80;
+  --bg4: #1d5f99;
+  --fg: #febc11;
+  --fg1: #f8d36a;
+  --fg2: #e7c35c;
+  --fg3: #c9a548;
+  --yellow: #febc11;
+  --blue: #2f5f8d;
+  --frost: #febc11;
+  --orange: #ffffff;
+  --gray: #4c7aa6;
+  --html5: #e34f26;
+  --teal: #8fbcbb;
+  --green: #a3be8c;
+  --purple: #b48ead;
+
+  /* Roles */
+  --on-mode: var(--bg); /* text on the mode color: the active tab, mode blocks, highlights */
+  --tab-fg: var(--fg3); /* inactive tabs */
+  --tab-hover: var(--yellow); /* an inactive tab or the post tab's × under the pointer or focused */
+  --tab-md: var(
+    --tab-fg
+  ); /* markdown icons on inactive tabs: the label's gold (design tab-markdown-icon-m1-m5-2.html, M1) */
+  --bar-fg: #fff3cf; /* the statusline's file name and position */
+  --ft-fg: var(--bar-fg); /* the statusline's file type block */
+  --ft-md: var(--blue); /* its markdown icon */
+  --accent-text: var(--frost); /* the gold used as text: tags, dates, headings, links */
+  --search-text: var(--yellow); /* the magnifier while searching, and matched words in the list */
+  --title: #eceff3; /* post titles, and code in posts */
+  --body: #c8d0da; /* a post's text */
+  --muted: #9aa3ae; /* excerpts and read times */
+  --frame: var(--bg1); /* post frames, in the social icons' navy */
+  --frame-hover: var(--frost);
+  --social-bg: var(--bg1);
+  --social-fg: var(--frost);
+  --social-hover-bg: var(--frost);
+  --social-hover-fg: var(--bg1);
+  --code-bg: var(--bg1);
+  --pre-bg: var(--bg);
+  --pre-fg: var(--fg2);
+  --pre-border: var(--bg1);
+  --list-bg: var(--bg1); /* the search list */
+  --list-border: transparent;
+  --list-sel: var(--bg3);
+  --list-shadow: rgb(0 0 0 / 0.4);
+  --placeholder: var(--bg4);
+  --caret: var(--yellow);
+
+  /* Left padding of the statusline segments and the first tab. The tilde column
+     is sized from it, so the ~, the first tab icon and the browser icon share one
+     center line: padding + icon (1.15em of 13px) + padding, with the ~ centered. */
+  --sl-pad: 10px;
+  --gutter: calc(2 * var(--sl-pad) + 1.15em);
+}
+
+/* Light: navy text on a pale gold page, under the same navy bars with gold blocks */
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --bg: #fff1c2;
+    --bg0-h: #fff8e1;
+    --bg1: #003660;
+    --bg2: #ffe9a8;
+    --bg3: #e3a200;
+    --bg4: #0b4677;
+    --fg: #003660;
+    --fg1: #003660;
+    --fg2: #0b4677;
+    --fg3: #3d5f82;
+    --yellow: #febc11;
+    --blue: #c79a2a;
+    --frost: #febc11;
+    --orange: #f5a300;
+    --gray: #8a6d1d;
+
+    --on-mode: #003660;
+    --tab-fg: #e7c35c;
+    --tab-md: #c79a2a;
+    --ft-fg: #003660; /* the file type block is gold here, so its text and icon go navy */
+    --ft-md: #003660;
+    --accent-text: #003660;
+    --search-text: #003660;
+    --title: #1f2023;
+    --body: #34363a;
+    --muted: #5c5e63;
+    --frame-hover: #e3a200;
+    --code-bg: #ffe9a8;
+    --pre-bg: #2e3440; /* code blocks stay dark: their syntax colors are for a dark background */
+    --pre-fg: #d8dee9;
+    --pre-border: #2e3440;
+    --list-bg: var(--bg0-h);
+    --list-border: var(--bg3);
+    --list-sel: var(--bg2);
+    --list-shadow: rgb(0 0 0 / 0.16);
+    --placeholder: var(--fg3);
+    --caret: var(--fg);
+  }
+}
+
+/* ── Reset ────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg0-h);
+  color: var(--fg);
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+#vim-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* fallback: browsers without dvh support */
+  height: 100dvh; /* dynamic viewport: adjusts as iOS Safari chrome shows/hides */
+  overflow: hidden;
+  width: 100%;
+}
+
+/* ── Editor ───────────────────────────────────────────────────────────────── */
+/* The search bar across the top, then the buffer. The search list is placed against it. */
+#editor-area {
+  --wb-h: 32px; /* the search bar's height */
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-bottom: 8px;
+  outline: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg3) var(--bg);
+}
+#content::-webkit-scrollbar {
+  width: 6px;
+}
+#content::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+#content::-webkit-scrollbar-thumb {
+  background: var(--bg3);
+  border-radius: 3px;
+}
+
+/* ── Lines ────────────────────────────────────────────────────────────────── */
+.line {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 1.6em;
+}
+
+/* Gutter — flush to the left viewport edge, like Vim */
+.line-num {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--gutter);
+  text-align: center;
+  color: var(--blue);
+  user-select: none;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Text content is centered independently */
+.line-content {
+  width: 100%;
+  max-width: 680px;
+  padding-left: 6px;
+  padding-right: 16px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* The name where the full art doesn't fit (design name-art-variants-2.html, V4c): large
+   bold text, centered in a block exactly two lines tall, so the ~ rows beside it and
+   the role on the line under it stay on the same rhythm as every other line. */
+.name-line {
+  height: 3.2em;
+  align-items: center;
+}
+.name-line .line-content {
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* The bio under the role (design about-page-variants-3.html, B), in the excerpts' muted
+   gray. It wraps on narrow screens, so it keeps clear of the ~ column on both sides. */
+.bio-line .line-content {
+  color: var(--muted);
+  padding-left: calc(var(--gutter) + 8px);
+  padding-right: calc(var(--gutter) + 8px);
+}
+
+/* ── Tab line ─────────────────────────────────────────────────────────────── */
+/* Chevron tabs on a bar of one gray (design Ch1-1h). Inactive tabs are the bar's
+   own color, separated by thin --bg3 lines along each chevron edge; only the
+   active tab is filled, in the mode color. Each tab is clipped to its chevron
+   and filled with the edge color; ::before is the same chevron shifted right by
+   --w, so a --w line shows along the notch. Tabs overlap by the full point, so
+   each notch line sits against the previous tab's point. */
+#tabline {
+  --sl-mode: var(--frost);
+  --pt: 9px; /* depth of each chevron point */
+  --w: 1.5px; /* edge line width */
+  --pad: var(--sl-pad); /* first tab's left padding, matches the statusline segments */
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  height: 28px;
+  flex-shrink: 0;
+  background: var(--bg1);
+  color: var(--tab-fg);
+  font-size: 13px;
+  white-space: nowrap;
+  user-select: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+#tabline::-webkit-scrollbar {
+  display: none;
+}
+#tabline[data-mode="search"] {
+  --sl-mode: var(--yellow);
+}
+
+.tab {
+  position: relative;
+  isolation: isolate;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 16px 0 calc(var(--pt) + 10px);
+  margin-right: calc(0px - var(--pt));
+  font: inherit;
+  color: inherit;
+  border: 0;
+  cursor: pointer;
+  background: var(--bg3);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--pt)) 0,
+    100% 50%,
+    calc(100% - var(--pt)) 100%,
+    0 100%,
+    var(--pt) 50%
+  );
+}
+.tab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg1);
+  clip-path: polygon(
+    var(--w) 0,
+    calc(100% - var(--pt)) 0,
+    100% 50%,
+    calc(100% - var(--pt)) 100%,
+    var(--w) 100%,
+    calc(var(--pt) + var(--w)) 50%
+  );
+}
+/* The first tab is flat on the left */
+.tab:first-child {
+  padding-left: var(--pad);
+  clip-path: polygon(0 0, calc(100% - var(--pt)) 0, 100% 50%, calc(100% - var(--pt)) 100%, 0 100%);
+}
+.tab:first-child::before {
+  clip-path: polygon(0 0, calc(100% - var(--pt)) 0, 100% 50%, calc(100% - var(--pt)) 100%, 0 100%);
+}
+/* The last point has nothing after it, so it gets its own line */
+.tab:last-child {
+  margin-right: 0;
+}
+.tab:last-child::before {
+  clip-path: polygon(
+    var(--w) 0,
+    calc(100% - var(--pt) - var(--w)) 0,
+    calc(100% - var(--w)) 50%,
+    calc(100% - var(--pt) - var(--w)) 100%,
+    var(--w) 100%,
+    calc(var(--pt) + var(--w)) 50%
+  );
+}
+.tab:hover {
+  color: var(--tab-hover);
+}
+.tab:focus-visible {
+  outline: none;
+  color: var(--tab-hover);
+}
+.tab:focus-visible .tab-icon {
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.tab.on {
+  color: var(--on-mode);
+  font-weight: bold;
+  z-index: 1;
+}
+.tab.on::before {
+  background: var(--sl-mode);
+}
+
+/* The post tab ends flat, and its × button after it draws the point, in the tab's
+   own color: filled when the post tab is active, the bar's gray when it isn't. */
+.tab.closable {
+  padding-right: 2px;
+  margin-right: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--pt) 50%);
+}
+.tab.closable::before {
+  clip-path: polygon(var(--w) 0, 100% 0, 100% 100%, var(--w) 100%, calc(var(--pt) + var(--w)) 50%);
+}
+.tab-close {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 calc(var(--pt) + 6px) 0 7px;
+  margin: 0 calc(0px - var(--pt)) 0 -1px; /* over the tab's last pixel, so no seam shows */
+  font: inherit;
+  font-size: 15px;
+  color: inherit;
+  border: 0;
+  cursor: pointer;
+  background: var(--bg1);
+  clip-path: polygon(0 0, calc(100% - var(--pt)) 0, 100% 50%, calc(100% - var(--pt)) 100%, 0 100%);
+}
+.tab-close > span {
+  display: block;
+  line-height: 1;
+  padding: 1px 3px 2px;
+  border-radius: 3px;
+}
+.tab-close:hover,
+.tab-close:focus-visible {
+  outline: none;
+  color: var(--fg);
+}
+.tab-close:hover > span,
+.tab-close:focus-visible > span {
+  background: var(--bg3);
+}
+.tab.on + .tab-close {
+  z-index: 1;
+  color: var(--on-mode);
+  font-weight: bold;
+  background: var(--sl-mode);
+}
+.tab.on + .tab-close:hover > span,
+.tab.on + .tab-close:focus-visible > span {
+  background: color-mix(in srgb, var(--on-mode) 18%, transparent);
+}
+/* Where there's a pointer, the post tab's × shows only while the tab or the × is
+   hovered, or the × has focus, even when the post is the one showing. It keeps its
+   room, so nothing moves. Touch screens can't hover, so they always show it. */
+@media (hover: hover) {
+  .tab-close > span {
+    opacity: 0;
+  }
+  .tab.closable:hover + .tab-close > span,
+  .tab-close:hover > span,
+  .tab-close:focus > span {
+    opacity: 1;
+  }
+}
+/* Hovering the post tab brightens its × along with its name */
+.tab.closable:not(.on):hover + .tab-close {
+  color: var(--tab-hover);
+}
+
+.tab-icon {
+  display: flex;
+}
+.tab-icon svg {
+  width: 1.15em;
+  height: 1.15em;
+  overflow: visible;
+} /* see .sl-icon svg */
+.tab-icon[data-icon="html5"] {
+  color: var(--html5);
+}
+.tab-icon[data-icon="markdown"] {
+  color: var(--tab-md);
+}
+.tab.on .tab-icon {
+  color: inherit;
+}
+
+/* ── Search ───────────────────────────────────────────────────────────────── */
+mark.search-highlight {
+  background: var(--yellow);
+  color: var(--on-mode);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+mark.search-highlight.current {
+  background: var(--orange);
+  color: var(--on-mode);
+  outline: 1px solid var(--fg);
+}
+
+/* Search bar (design blog-search-variants-6.html, A): the magnifier, then the query,
+   then how many posts match. The magnifier stays while you type, with the cursor after
+   it, and sits over the ~ column like the first tab icon and the browser icon. The
+   underline takes the mode's color. */
+#winbar {
+  --wb: var(--bg1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--wb-h);
+  flex-shrink: 0;
+  padding: 0 var(--sl-pad);
+  border-bottom: 1px solid var(--wb);
+  font-size: 13px;
+  cursor: text;
+  transition: border-color 0.15s;
+}
+#winbar[data-state="search"] {
+  --wb: var(--yellow);
+}
+.wb-ic {
+  display: flex;
+  justify-content: center;
+  width: 1.15em;
+  flex-shrink: 0;
+  color: var(--gray);
+}
+.wb-ic svg {
+  width: 1em;
+  height: 1em;
+  overflow: visible;
+} /* see .sl-icon svg */
+#winbar[data-state="search"] .wb-ic {
+  color: var(--search-text);
+}
+#search {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: var(--fg);
+  background: transparent;
+  border: 0;
+  outline: none;
+  caret-color: var(--caret);
+}
+#search::placeholder {
+  color: var(--placeholder);
+  opacity: 1;
+}
+.wb-n {
+  color: var(--gray);
+  font-size: 12px;
+  white-space: nowrap;
+}
+/* Without JavaScript there's nothing to search with */
+html:not(.js) #winbar {
+  display: none;
+}
+
+/* The matching posts, under the bar (like :find's list): the file name, then the title.
+   Names line up with the query: padding + magnifier + the bar's gap. It never runs past the buffer; a long list scrolls. */
+#search-list {
+  position: absolute;
+  z-index: 5;
+  top: var(--wb-h);
+  left: 0;
+  width: max-content;
+  min-width: 360px;
+  max-width: calc(100% - 16px);
+  max-height: calc(100% - var(--wb-h) - 12px);
+  overflow-y: auto;
+  padding: 4px 0;
+  background: var(--list-bg);
+  border: 1px solid var(--list-border);
+  border-top: 0;
+  border-radius: 0 0 6px 0;
+  box-shadow: 0 10px 28px var(--list-shadow);
+  font-size: 13px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg3) var(--list-bg);
+}
+#search-list[hidden] {
+  display: none;
+}
+.sr-item,
+.sr-none {
+  padding: 2px 12px 2px calc(var(--sl-pad) + 1.15 * 13px + 8px);
+}
+.sr-item {
+  display: flex;
+  gap: 3ch;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.sr-file {
+  flex-shrink: 0;
+  color: var(--fg);
+}
+.sr-title {
+  margin-left: auto;
+  min-width: 0;
+  color: var(--fg3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sr-item b {
+  color: var(--search-text);
+}
+@media (hover: hover) {
+  .sr-item:hover {
+    background: var(--bg2);
+  }
+}
+.sr-item.sel {
+  background: var(--list-sel);
+}
+.sr-item.sel .sr-file {
+  font-weight: bold;
+}
+.sr-none {
+  color: var(--fg3);
+  white-space: normal;
+}
+
+/* ── Status line ──────────────────────────────────────────────────────────── */
+/* Powerline layout: | browser-icon MODE > index.html ... < html < 1,1 < Top |
+   The mode block and the Top block share --sl-mode, which follows the Vim mode. */
+#statusline {
+  --sl-mode: var(--frost);
+  display: flex;
+  align-items: stretch;
+  height: 28px;
+  background: var(--bg1);
+  color: var(--fg1);
+  font-size: 13px;
+  flex-shrink: 0;
+  user-select: none;
+  white-space: nowrap;
+}
+#statusline[data-mode="search"] {
+  --sl-mode: var(--yellow);
+}
+
+.sl-seg {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 var(--sl-pad);
+  flex-shrink: 0;
+}
+.sl-icon {
+  display: flex;
+}
+/* Font Awesome glyphs run to the edge of their box, and Safari (and every iOS browser)
+   snaps the SVG's clip to device pixels, shaving off the antialiased edge. Letting the
+   SVG paint past its box keeps the whole glyph; size and layout are unchanged. */
+.sl-icon svg {
+  width: 1.15em;
+  height: 1.15em;
+  overflow: visible;
+}
+.sl-fill {
+  flex: 1;
+}
+
+#sl-mode {
+  background: var(--sl-mode);
+  color: var(--on-mode);
+  font-weight: bold;
+}
+#sl-filename {
+  color: var(--bar-fg);
+  font-weight: bold;
+  align-self: center;
+  padding: 0 8px 0 var(--sl-pad);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#sl-filetype {
+  background: var(--bg3);
+  color: var(--ft-fg);
+}
+#sl-ft-icon {
+  color: var(--html5);
+}
+#sl-ft-icon[data-icon="markdown"] {
+  color: var(--ft-md);
+}
+#sl-pos {
+  background: var(--bg4);
+  color: var(--bar-fg);
+}
+#sl-pct {
+  background: var(--sl-mode);
+  color: var(--on-mode);
+  font-weight: bold;
+  min-width: calc(3ch + 20px);
+  justify-content: flex-end;
+}
+
+/* Arrow separators: --c is the arrow's color, --behind is the color it sits on */
+.sl-sep {
+  width: 10px;
+  flex-shrink: 0;
+  background: var(--behind);
+}
+.sl-sep::before {
+  content: "";
+  display: block;
+  height: 100%;
+  background: var(--c);
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+.sl-sep-mode {
+  --c: var(--sl-mode);
+  --behind: var(--bg1);
+}
+.sl-sep-mode::before {
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.sl-sep-ft {
+  --c: var(--bg3);
+  --behind: var(--bg1);
+}
+.sl-sep-pos {
+  --c: var(--bg4);
+  --behind: var(--bg3);
+}
+.sl-sep-pct {
+  --c: var(--sl-mode);
+  --behind: var(--bg4);
+}
+
+::selection {
+  background: var(--bg3);
+  color: var(--fg);
+}
+
+/* The build writes a plain copy of the home page into #content for search engines and
+   anything that doesn't run JavaScript. With JavaScript, main.js replaces it on its
+   first render, so keep it from flashing up first. */
+.js #content > .prerender {
+  visibility: hidden;
+}
+
+/* On the page for screen readers and search engines, but not drawn (the home page's
+   <h1>, whose name is drawn as the ASCII art instead) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Social links row ─────────────────────────────────────────────────────── */
+.social-line {
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+/* Tilde column injected by fillTildes() to cover blocks taller than a line
+   (the social links and the posts). Each ~ row is one line height tall; the
+   column stops at the block's bottom edge so it never overlaps the next line. */
+.block-gutter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  width: var(--gutter);
+  color: var(--blue);
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+  user-select: none;
+}
+
+.social-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 680px;
+}
+
+.social-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: var(--social-bg);
+  border-radius: 10px;
+  color: var(--social-fg);
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.social-btn:hover {
+  background: var(--social-hover-bg);
+  color: var(--social-hover-fg);
+}
+
+.social-label {
+  font-size: 11px;
+  color: var(--gray);
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+
+/* Touch screens (design T1): the shortcuts under the icons are typed, so phones and
+   tablets show just the icons. A tablet with a trackpad hovers, and keeps them. */
+@media (hover: none) {
+  .social-label {
+    display: none;
+  }
+}
+
+/* ── Posts on the home page (design 4d) ───────────────────────────────────── */
+/* A thin frame per post with the date set into its top border. The column is
+   padded on the left to clear the tilde gutter. */
+.posts-line {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 26px 0 24px;
+}
+
+/* One page of posts and the pager under them, in one column */
+.post-list {
+  width: 100%;
+  max-width: 760px;
+  padding: 0 24px 0 48px;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  text-align: center;
+}
+
+/* Under the list: the same newer / older links as a post's footer (.nav-pair) */
+.pager {
+  margin-top: 40px;
+  padding-top: 14px;
+  border-top: 1px solid var(--bg1);
+}
+
+.post-card {
+  position: relative;
+  display: block;
+  border: 1px solid var(--frame);
+  border-radius: 8px;
+  padding: 18px 16px 12px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+/* Hover only where there's a pointer to hover with; on touch screens it sticks after a tap */
+@media (hover: hover) {
+  .post-card:hover {
+    border-color: var(--frame-hover);
+  }
+}
+.post-card:focus-visible {
+  border-color: var(--frame-hover);
+  outline: none;
+}
+
+.post-card .post-date {
+  position: absolute;
+  top: -0.5px; /* centered on the 1px border line, not its inner edge */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0 8px;
+  background: var(--bg0-h);
+  color: var(--gray);
+  font-size: 12px;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+@media (hover: hover) {
+  .post-card:hover .post-date {
+    color: var(--accent-text);
+  }
+}
+.post-card:focus-visible .post-date {
+  color: var(--accent-text);
+}
+
+.post-title {
+  font-size: 1em;
+  line-height: 1.6;
+  color: var(--title);
+  font-weight: bold;
+}
+
+.post-excerpt {
+  margin-top: 2px;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 10px;
+  font-size: 12px;
+  color: var(--accent-text);
+}
+.post-card .post-tags {
+  margin-top: 8px;
+}
+/* A tag searches for itself when clicked (main.js) */
+.post-tags [data-tag] {
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .post-tags [data-tag]:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+/* ── Post view (design 5) ─────────────────────────────────────────────────── */
+/* A post is HTML, not buffer lines, so it has no tilde column. The date and
+   hashtags are set into the top and bottom borders of the header frame. */
+#content.reading {
+  padding-bottom: 0;
+}
+
+.post-view {
+  max-width: calc(72ch + 48px);
+  margin: 0 auto;
+  padding: 48px 24px 56px;
+  text-align: left;
+}
+
+.post-head {
+  position: relative;
+  margin: 10px 0 44px;
+  padding: 28px 20px 26px;
+  border: 1px solid var(--frame);
+  border-radius: 8px;
+  text-align: center;
+}
+.post-head h1 {
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--title);
+}
+.post-head .post-date,
+.post-head .post-tags {
+  position: absolute;
+  left: 50%;
+  padding: 0 10px;
+  background: var(--bg0-h);
+  font-size: 12px;
+  white-space: nowrap;
+}
+/* Centered on the 1px border lines, not their inner edges */
+.post-head .post-date {
+  top: -0.5px;
+  transform: translate(-50%, -50%);
+  color: var(--accent-text);
+}
+.post-head .post-tags {
+  bottom: -0.5px;
+  transform: translate(-50%, 50%);
+  flex-wrap: nowrap;
+}
+.post-meta {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Article body */
+.prose {
+  color: var(--body);
+}
+.prose > * + * {
+  margin-top: 1.1em;
+}
+.prose h2 {
+  margin-top: 2.2em;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--accent-text);
+}
+.prose h2 + * {
+  margin-top: 0.7em;
+}
+.prose a {
+  color: var(--accent-text);
+  text-underline-offset: 3px;
+}
+.prose code,
+.prose pre {
+  font-family: inherit;
+} /* browsers default these to a different monospace */
+.prose code {
+  background: var(--code-bg);
+  color: var(--title);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.93em;
+}
+.prose pre {
+  background: var(--pre-bg);
+  border: 1px solid var(--pre-border);
+  border-radius: 6px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--pre-fg);
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg3) var(--pre-bg);
+}
+.prose pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  border-radius: 0;
+}
+.prose ul {
+  list-style: none;
+}
+.prose li {
+  position: relative;
+  padding-left: 2ch;
+}
+.prose li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: var(--accent-text);
+}
+.prose li + li {
+  margin-top: 0.4em;
+}
+.prose blockquote {
+  border-left: 2px solid var(--yellow);
+  padding: 2px 0 2px 14px;
+  color: var(--title);
+  font-style: italic;
+}
+.prose kbd {
+  font: inherit;
+  font-size: 0.9em;
+  color: var(--title);
+  border: 1px solid var(--bg3);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0 5px;
+}
+
+/* Syntax colors for code blocks */
+.tk-tag {
+  color: var(--blue);
+}
+.tk-attr,
+.tk-sel {
+  color: var(--teal);
+}
+.tk-str {
+  color: var(--green);
+}
+.tk-prop,
+.tk-fn {
+  color: var(--frost);
+}
+.tk-num {
+  color: var(--purple);
+}
+.tk-com {
+  color: var(--gray);
+  font-style: italic;
+}
+
+.post-foot {
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid var(--bg1);
+}
+
+/* ── Newer / older links (design A2) ──────────────────────────────────────── */
+/* Under the post list (.pager) and at the end of a post (.post-foot): newer on the
+   left, where you are in the middle, older on the right. Each keeps its column, so
+   the sides never move. A side with nowhere to go is greyed out with a dash under
+   its label. A long title is cut to one line; the link's tooltip has all of it. */
+.nav-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  text-align: left;
+}
+.nav-pair > a,
+.nav-pair > .is-off {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
+  text-decoration: none;
+}
+.nav-pair > :first-child {
+  grid-column: 1;
+  justify-self: start;
+  align-items: flex-start;
+  text-align: left;
+}
+.nav-pair > :last-child {
+  grid-column: 3;
+  justify-self: end;
+  align-items: flex-end;
+  text-align: right;
+}
+.nav-pair .nav-pos {
+  grid-column: 2;
+  align-self: end;
+  padding-bottom: 2px;
+  font-size: 12px;
+  color: var(--gray);
+  white-space: nowrap;
+}
+.nav-pair .lbl {
+  font-size: 12px;
+  color: var(--fg3);
+}
+.nav-pair .t {
+  display: block;
+  max-width: 100%;
+  color: var(--title);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nav-pair a:hover .t,
+.nav-pair a:focus-visible .t {
+  color: var(--accent-text);
+}
+.nav-pair a:focus-visible {
+  outline: 1px dashed var(--frost);
+  outline-offset: 4px;
+}
+.nav-pair .is-off,
+.nav-pair .is-off .lbl,
+.nav-pair .is-off .t {
+  color: var(--bg3);
+  cursor: default;
+  user-select: none;
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 12px;
+  }
+  :root {
+    --sl-pad: 7px;
+  }
+
+  /* Status line: browser icon stands in for the mode label, html icon for its label */
+  #mode-indicator,
+  #sl-ft-label {
+    display: none;
+  }
+  .sl-seg {
+    gap: 6px;
+  }
+  #sl-pct {
+    min-width: calc(3ch + 14px);
+  }
+
+  /* Tab line: inactive tabs show only their icon; the first one lines up with the browser icon */
+  .tab {
+    gap: 6px;
+  }
+  .tab:not(.on) .tab-label {
+    display: none;
+  }
+
+  .line-content {
+    max-width: 100%;
+    padding-right: 8px;
+  }
+
+  /* Posts on the home page: smaller type, a third line of preview */
+  .post-list {
+    padding: 0 12px 0 42px;
+    font-size: 12px;
+  }
+  .posts {
+    font-size: 12px;
+  }
+  .post-excerpt {
+    -webkit-line-clamp: 3;
+  }
+
+  /* Search list: the full width, each title under its file name */
+  #search-list {
+    right: 0;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    border-radius: 0;
+    font-size: 12px;
+  }
+  .sr-item {
+    flex-direction: column;
+    gap: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    white-space: normal;
+  }
+  .sr-title {
+    margin-left: 0;
+    white-space: nowrap;
+  }
+
+  /* Post view */
+  .post-view {
+    padding: 28px 16px 40px;
+  }
+  .post-head {
+    padding: 24px 14px 22px;
+  }
+  .post-head h1 {
+    font-size: 18px;
+  }
+  .nav-pair {
+    gap: 10px;
+  }
+}
