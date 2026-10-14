@@ -10,7 +10,8 @@
 // and structured-data tags, and its content already in #content, so search engines
 // and link previews see it without running JavaScript. main.js then takes over in the
 // browser, drawing the same HTML from render.js. Also writes posts.js (the post data
-// main.js reads), sitemap.xml, feed.xml and robots.txt, and copies the static files.
+// main.js reads), sitemap.xml and feed.xml, and copies the static files
+// and everything in public/.
 //
 // Run: npm run build      Preview: npm run preview
 
@@ -52,16 +53,10 @@ const OG_IMAGE = {
 const ROOT = path.join(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
 // Served as they are
-const STATIC = [
-  "style.css",
-  "main.js",
-  "render.js",
-  "404.html",
-  "favicon.ico",
-  "favicon.svg",
-  "apple-touch-icon.png",
-  "og-image.png",
-];
+const STATIC = ["style.css", "main.js", "render.js", "404.html"];
+// Assets (icons, images): everything in public/ is copied to the root of dist/,
+// so public/images/foo.png is served at /images/foo.png
+const PUBLIC = path.join(ROOT, "public");
 
 // ── Markdown, with code blocks colored at build time ─────────────────────────
 
@@ -169,7 +164,7 @@ function page(template, { headHtml, content, reading, file }) {
   return html;
 }
 
-// ── Sitemap, feed, robots ────────────────────────────────────────────────────
+// ── Sitemap, feed ────────────────────────────────────────────────────────────
 
 const xml = (s) =>
   String(s)
@@ -236,11 +231,6 @@ function feed(posts) {
   ].join("\n");
 }
 
-function robots() {
-  const source = fs.readFileSync(path.join(ROOT, "robots.txt"), "utf8").trimEnd();
-  return `${source}\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
-}
-
 // ── Build ────────────────────────────────────────────────────────────────────
 
 async function build({ postsDir = POSTS_DIR, outDir = DIST } = {}) {
@@ -253,6 +243,7 @@ async function build({ postsDir = POSTS_DIR, outDir = DIST } = {}) {
   fs.mkdirSync(path.join(outDir, "page"), { recursive: true });
   const write = (file, text) => fs.writeFileSync(path.join(outDir, file), text);
 
+  fs.cpSync(PUBLIC, outDir, { recursive: true });
   for (const f of STATIC) fs.copyFileSync(path.join(ROOT, f), path.join(outDir, f));
 
   const data = posts.map(({ slug, title, date, tags, excerpt, body }) => ({
@@ -359,7 +350,6 @@ async function build({ postsDir = POSTS_DIR, outDir = DIST } = {}) {
 
   write("sitemap.xml", sitemap(posts));
   write("feed.xml", feed(posts));
-  write("robots.txt", robots());
   return { posts, outDir };
 }
 

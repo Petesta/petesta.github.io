@@ -1,15 +1,18 @@
 # petesta.github.io
 
-My personal [blog](blog).
+My personal [blog](https://blog.petesta.com): plain HTML, CSS and JavaScript, built from Markdown posts and hosted on GitHub Pages.
 
-This blog is built from [Jekyll][jekyll] and uses the [Jekyll Uno theme][jekyll-uno] from [Josh Gerdes][josh-gerdes].
+#### Writing a post
+
+Add a Markdown file to `posts/`. It's published at `/posts/<file name>`.
 
 #### Developing locally
-* Start Jekyll server: `bundle exec jekyll serve --watch`
 
-Access via: `localhost:4000`
+- Install: `npm install`
+- Build into `dist/`: `npm run build`
+- Build and serve locally: `npm run preview`
+- Lint and format check: `npm run check`
 
-[blog]: https://blog.petesta.com
-[jekyll]: https://jekyllrb.com/
-[jekyll-uno]: https://github.com/joshgerdes/jekyll-uno
-[josh-gerdes]: https://github.com/joshgerdes
+#### Deploying
+
+Pushing to `master` runs `.github/workflows/deploy.yml`, which builds the site and publishes `dist/` to GitHub Pages.
