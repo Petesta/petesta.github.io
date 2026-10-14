@@ -1,0 +1,43 @@
+{
+  "name": "blog.petesta.com",
+  "version": "1.0.0",
+  "description": "Source for blog.petesta.com: a Vim-inspired personal site and blog, plain HTML, CSS and JavaScript, hosted on GitHub Pages.",
+  "main": "main.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "preview": "npm run build && node scripts/serve.js",
+    "vitals": "node scripts/build.js && node scripts/vitals.js",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "lint": "oxlint .",
+    "check": "npm run lint && npm run format:check",
+    "postinstall": "playwright install chromium webkit",
+    "test": "playwright test",
+    "test:e2e": "playwright test",
+    "test:safari": "node tests/safari/icon-clip.safari.js && node tests/safari/tilde-layout.safari.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Petesta/petesta.github.com.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Petesta/petesta.github.com/issues"
+  },
+  "homepage": "https://github.com/Petesta/petesta.github.com#readme",
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "marked": "^18.0.14",
+    "oxfmt": "0.71.0",
+    "oxlint": "1.86.0",
+    "pngjs": "^7.0.0",
+    "shiki": "^4.5.0",
+    "yaml": "^2.9.1"
+  }
+}
